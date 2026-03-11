@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Owner Dashboard</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f5f7; margin: 0; padding: 20px; color: #333; }
+        .header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 20px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; }
+        h1 { margin: 0; color: #e75a24; }
+        .order-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
+        
+        .order-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-left: 5px solid #ccc; display: flex; flex-direction: column;}
+        /* Card border changes based on status */
+        .order-card.Pending { border-left-color: #FFC107; }
+        .order-card.Preparing { border-left-color: #2196F3; }
+        .order-card.Delivered { border-left-color: #4CAF50; opacity: 0.7; }
+
+        .order-header { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+        .order-id { font-size: 12px; color: #888; }
+        .order-time { font-size: 14px; font-weight: bold; color: #555; }
+        .customer-email { font-weight: bold; margin-bottom: 10px; font-size: 16px; }
+        .order-item { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 5px; color: #555; }
+        .order-total { margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ccc; display: flex; justify-content: space-between; font-size: 18px; font-weight: bold; color: #222; }
+        
+        /* Buttons and Badges */
+        .refresh-btn { background: #e75a24; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .status-container { margin-top: 15px; display: flex; justify-content: space-between; align-items: center; }
+        
+        .badge { padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+        .badge.Pending { background: #FFF3CD; color: #856404; }
+        .badge.Preparing { background: #CCE5FF; color: #004085; }
+        .badge.Delivered { background: #D4EDDA; color: #155724; }
+
+        .action-btn { border: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; color: white; transition: 0.2s;}
+        .btn-accept { background: #2196F3; }
+        .btn-accept:hover { background: #1976D2; }
+        .btn-deliver { background: #4CAF50; }
+        .btn-deliver:hover { background: #388E3C; }
+
+        /* Bottom Navigation Bar Styles */
+body {
+    padding-bottom: 80px; /* Prevents content from hiding behind the bar */
+}
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0;
+    z-index: 1000;
+}
+.nav-item {
+    text-decoration: none;
+    color: #888;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+.nav-item.active {
+    color: #e75a24; /* Swiggy Orange */
+}
+.nav-icon { font-size: 22px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>👨‍🍳 Kitchen Dashboard</h1>
+        <button class="refresh-btn" onclick="fetchOrders()">🔄 Refresh Orders</button>
+    </div>
+
+    <div id="ordersContainer" class="order-grid">
+        <h3 style="color: #888;">Loading orders...</h3>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:3000';
+
+        async function fetchOrders() {
+            const container = document.getElementById('ordersContainer');
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/admin/orders`);
+                const orders = await response.json();
+
+                if (orders.length === 0) {
+                    container.innerHTML = '<h3 style="color: #888;">No orders yet. Waiting for customers!</h3>';
+                    return;
+                }
+
+                container.innerHTML = orders.map(order => {
+                   const orderDate = new Date(order.date).toLocaleString('en-IN', { 
+                    day: 'numeric', 
+                    month: 'short', 
+                    year: 'numeric', 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+                    const itemsList = order.items.map(item => `<div class="order-item"><span>${item.quantity}x ${item.name}</span></div>`).join('');
+                    
+                    // Default to 'Pending' if old orders don't have a status yet
+                    const currentStatus = order.status || 'Pending';
+
+                    // Logic to figure out which button to show
+                    let buttonHTML = '';
+                    if (currentStatus === 'Pending') {
+                        buttonHTML = `<button class="action-btn btn-accept" onclick="updateStatus('${order._id}', 'Preparing')">Accept Order</button>`;
+                    } else if (currentStatus === 'Preparing') {
+                        buttonHTML = `<button class="action-btn btn-deliver" onclick="updateStatus('${order._id}', 'Delivered')">Mark Delivered</button>`;
+                    } else {
+                        buttonHTML = `<span style="color:#4CAF50; font-weight:bold;">✅ Done</span>`;
+                    }
+
+                    return `
+                        <div class="order-card ${currentStatus}">
+                            <div class="order-header">
+                                <span class="order-id">ID: ${order._id.slice(-6)}</span>
+                                <span class="order-time">⏰ ${orderDate}</span>
+                            </div>
+                            <div class="customer-email">👤 ${order.email}</div>
+                            
+                            <div style="flex-grow: 1;">
+                                <div style="margin-bottom: 10px; color:#888; font-size:12px;">ORDER DETAILS:</div>
+                                ${itemsList}
+                            </div>
+                            
+                            <div class="order-total">
+                                <span>Total:</span>
+                                <span>₹${order.totalAmount}</span>
+                            </div>
+
+                            <div class="status-container">
+                                <span class="badge ${currentStatus}">${currentStatus}</span>
+                                ${buttonHTML}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            } catch (error) {
+                container.innerHTML = '<h3 style="color: red;">Error connecting to server!</h3>';
+            }
+        }
+
+        // --- NEW FUNCTION: Send Status Update to Backend ---
+        async function updateStatus(orderId, newStatus) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/admin/orders/${orderId}/status`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: newStatus })
+                });
+
+                if (response.ok) {
+                    fetchOrders(); // Instantly refresh the screen to show the new status!
+                } else {
+                    alert("Failed to update status.");
+                }
+            } catch (err) {
+                alert("Server error.");
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', fetchOrders);
+        setInterval(fetchOrders, 30000); 
+    </script>
+
+<div class="bottom-nav">
+    <a href="admin.html" class="nav-item active">
+        <span class="nav-icon">📦</span>
+        <span>Orders</span>
+    </a>
+    <a href="admin-menu.html" class="nav-item">
+        <span class="nav-icon">🍔</span>
+        <span>Menu</span>
+    </a>
+</div>
+
+</body>
+</html>

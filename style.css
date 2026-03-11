@@ -1,0 +1,319 @@
+        /* ==============================
+           1. RESET & BASE STYLES
+           ============================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: #FDFBFA; /* Cream-off-white background from image 4 */ color: #333; }
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        ul { list-style: none; }
+
+        /* ==============================
+           2. RECREATING THE POLISHED UI (Images 4-9)
+           ============================== */
+        /* Core layout grid inspired by Swiggy */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* The refined Header (Image 4 top) */
+        header { background-color: white; border-bottom: 1px solid #EAEAEA; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .logo { font-size: 24px; font-weight: 700; color: #E75A24; /* Swiggy-like orange */ display: flex; align-items: center; gap: 8px; }
+        .logo-icon { width: 30px; height: 30px; background-color: #E75A24; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 18px; }
+        
+        .location { color: #888; display: flex; align-items: center; gap: 6px; font-size: 14px; border: 1px solid #DDD; padding: 6px 12px; border-radius: 6px; }
+        .location input { border: none; outline: none; font-size: 14px; color: #555; background: none; }
+
+        nav ul { display: flex; gap: 30px; font-size: 15px; font-weight: 600; }
+        nav li:hover { color: #E75A24; }
+        .header-right { display: flex; align-items: center; gap: 20px; }
+        .sign-in-btn { background-color: #E75A24; color: white; border: none; padding: 10px 22px; border-radius: 6px; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+        .sign-in-btn:hover { background-color: #D64C1B; }
+        .cart-icon { font-size: 22px; color: #555; position: relative; display: flex; }
+        .cart-count { position: absolute; top: -8px; right: -10px; background-color: #E75A24; color: white; font-size: 10px; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 700; }
+
+        /* ==============================
+           3. HERO SECTION (Image 9)
+           ============================== */
+       
+.hero { 
+    position: relative; /* REQUIRED: Anchors absolute children */
+    height: 400px; /* Adjust height as needed */
+    color: white; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    text-align: center; 
+    overflow: hidden; /* Prevents video from overflowing */
+}
+
+/* 1. Video Layer CSS */
+.hero-video {
+    position: absolute; /* REQUIRED: Floats relative to .hero */
+    inset: 0; /* REQUIRED: Fills the entire .hero section */
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* REQUIRED: Crops video like background-size: cover */
+    z-index: 1; /* Lowest z-index */
+}
+
+/* 2. Dark Overlay CSS (Adds contrast) */
+.hero-overlay { 
+    position: absolute; /* REQUIRED: Floats above video */
+    inset: 0; /* REQUIRED: Fills .hero section */
+    background-color: rgba(0,0,0,0.5); /* Semi-transparent black */
+    z-index: 5; /* Middle z-index */
+}
+
+/* 3. Hero Content CSS (Text, Search) */
+.hero-content { 
+    position: relative; /* REQUIRED: Forces content above overlay */
+    z-index: 10; /* Highest z-index: floats on TOP */
+    max-width: 600px; 
+    padding: 20px;
+}
+
+.hero-content h1 { font-size: 48px; font-weight: 700; margin-bottom: 10px; line-height: 1.2; }
+.hero-content h1 span { color: #E75A24; } /* Matches Swiggy Orange */
+.hero-content p { font-size: 16px; margin-bottom: 30px; color: rgba(255,255,255,0.9); }
+        .hero-search { display: flex; background: white; border-radius: 50px; padding: 5px 5px 5px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .hero-search input { border: none; outline: none; flex: 1; font-size: 15px; color: #555; }
+        .hero-search button { background-color: #E75A24; color: white; border: none; padding: 10px 30px; border-radius: 50px; font-weight: 700; cursor: pointer; font-size: 14px; }
+
+        /* Category section (Image 4 bottom icons) */
+        .categories { padding: 50px 0; }
+        .categories h2 { font-size: 24px; font-weight: 700; margin-bottom: 30px; color: #444; text-align: center;}
+        .category-grid { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .category-card { 
+            background: #FEEEDF; /* Pale orange background from image 4 */
+            width: 100px; height: 100px; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 10px; cursor: pointer; transition: background 0.2s; border: 1px solid #FDD7B2; }
+        .category-card:hover { background: #FCDFC0; }
+        .category-icon { font-size: 32px; color: #E75A24; }
+        .category-name { font-size: 12px; font-weight: 600; color: #D64C1B; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* ==============================
+           4. RESTAURANT GRID (Images 5-6 grid layout)
+           ============================= */
+        .restaurants { padding: 0 0 50px 0; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .section-header h2 { font-size: 28px; font-weight: 700; color: #333; }
+        .view-all { color: #E75A24; font-weight: 600; font-size: 14px; }
+
+        .restaurant-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* 3-column grid like image 5 */
+            gap: 25px; 
+        }
+
+        .restaurant-card { 
+            background-color: white; border-radius: 12px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; border: 1px solid #F4F4F4;}
+        .restaurant-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .restaurant-card img { width: 100%; height: 180px; object-fit: cover; }
+        .restaurant-details { padding: 18px; }
+        .restaurant-details h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; color: #333; }
+        .restaurant-tags { font-size: 13px; color: #777; margin-bottom: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
+        .card-meta { display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: #888; border-top: 1px solid #F0F0F0; padding-top: 12px; }
+        .meta-rating { display: flex; align-items: center; gap: 4px; font-weight: 600; color: #555;}
+        .rating-star { color: #FFB300; } /* Gold color for star ratings */
+        
+        .meta-price { font-weight: 600; color: #E75A24; font-size: 14px;}
+        .add-to-cart { background-color: #60B246; /* Green Swiggy-like button */ color: white; border: none; padding: 6px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+        .add-to-cart:hover { background-color: #51963B; }
+
+        /* Simplified Footer (Image 8 columns) */
+        footer { background-color: #17110C; /* Dark background from image 8 */ color: #AAA; padding: 70px 0 30px 0; font-size: 14px; margin-top: auto; }
+        .footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 40px; }
+        .footer-logo { font-size: 24px; font-weight: 700; color: white; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .footer-motto { font-size: 13px; margin-bottom: 25px; color: #888; max-width: 250px; }
+        
+        .footer-col h4 { color: white; font-weight: 600; margin-bottom: 20px; font-size: 16px; }
+        .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+        .footer-bottom { border-top: 1px solid #333; margin-top: 50px; padding-top: 30px; text-align: center; font-size: 12px; color: #666;}
+        
+        /* Add this to your <style> section */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none; /* Hidden by default */
+    position: absolute;
+    right: 0;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    z-index: 1001;
+    margin-top: 10px;
+    overflow: hidden;
+    border: 1px solid #eee;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.dropdown-content a:hover {
+    background-color: #fdfbfa;
+    color: #e75a24;
+}
+
+/* Show the menu when we add the 'show' class via JS */
+.show { display: block; }
+.profile-dropdown { position: relative; display: inline-block; }
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    z-index: 1001;
+    margin-top: 10px;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    display: block;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.dropdown-content a:hover { background-color: #fdfbfa; color: #e75a24; }
+
+/* The 'show' class triggered by JavaScript */
+.show { display: block; }
+
+
+/* Circular Avatar Style */
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #737472; /* Professional Green from your screenshot */
+    color: white;
+    border-radius: 50%; /* Makes it a circle */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 18px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.user-avatar:hover { transform: scale(1.05); }
+
+/* Information Header inside Dropdown */
+.user-info-header {
+    padding: 15px;
+    background: #fdfbfa;
+    text-align: left;
+}
+
+.dropdown-content {
+    min-width: 200px; /* Slightly wider for info */
+    right: 0;
+    border-radius: 12px; /* Smoother corners */
+}
+/* Update this at the bottom of your <style> section */
+.dropdown-content.show {
+    display: block !important;
+    z-index: 5000; /* Ensures it floats ABOVE the pizza video and cards */
+}
+/* Ensure the menu is at the very front of the screen */
+.dropdown-content.show {
+    display: block !important;
+    z-index: 9999 !important;
+}
+
+/* Fix for the circle icon alignment */
+.user-avatar span {
+    pointer-events: none; /* This ensures clicking the symbol triggers the parent div */
+}
+
+/* --- DARK MODE STYLES --- */
+body.dark-mode {
+    background-color: #121212;
+    color: #EAEAEA;
+}
+
+body.dark-mode header, 
+body.dark-mode .restaurant-card, 
+body.dark-mode .dropdown-content {
+    background-color: #1E1E1E;
+    border-color: #333;
+}
+
+body.dark-mode .restaurant-details h3, 
+body.dark-mode .section-header h2 {
+    color: #FFF;
+}
+
+body.dark-mode .hero-search {
+    background: #333;
+    border: 1px solid #444; /* Adds a subtle border for depth */
+}
+
+/* 👇 This fixes the white box issue */
+body.dark-mode .hero-search input {
+    background: transparent; 
+    color: white;
+}
+
+/* 👇 This makes the placeholder text easier to read in dark mode */
+body.dark-mode .hero-search input::placeholder {
+    color: #aaa; 
+}
+body.dark-mode .category-card {
+    background: #2A1F1A;
+    border-color: #3D2C24;
+}
+/* 👇 Fixes for the Profile Dropdown in Dark Mode 👇 */
+
+/* 1. Make the top name section dark and add a subtle border */
+body.dark-mode .user-info-header {
+    background: #2A2A2A;
+}
+
+/* 2. Force the username to be white (overrides the inline #333 style) */
+body.dark-mode #userNameDisplay {
+    color: #EAEAEA !important; 
+}
+
+/* 3. Make the links (My Orders, Log Out) readable white text */
+body.dark-mode .dropdown-content a {
+    color: #EAEAEA;
+}
+
+/* 4. Make the hover effect a nice dark grey instead of bright white */
+body.dark-mode .dropdown-content a:hover {
+    background-color: #333;
+    color: #e75a24; /* Keeps the Swiggy orange accent */
+}
+
+/* 5. Darken the dividing line */
+body.dark-mode .dropdown-content hr {
+    border-top: 1px solid #444 !important;
+}
+
+body {
+    /* A warm, creamy off-white base color */
+    background-color: #fdfbf7; 
+    
+    /* A subtle, organic paper texture */
+    background-image: url("https://www.transparenttextures.com/patterns/rice-paper.png");
+    
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}

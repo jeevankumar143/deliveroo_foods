@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodFlow - Swiggy Clone Project</title>
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="favicon.png" alt="Shop Logo" style="height: 40px;">
+                Deliveroo foods
+            </div>
+            
+            <div class="location" onclick="openLocationModal()" style="cursor: pointer; transition: 0.2s;">
+                 <span>📍</span>
+                 <input type="text" id="headerAddressDisplay" value="Click to set delivery address" readonly style="cursor: pointer; width: 180px;">
+            </div>
+
+            <!-- <nav>
+                <ul>
+                    <li><a href="#">Browse</a></li>                            |||                                         |||
+                    <li><a href="#">Offers</a></li>                            |||  buttons i make it un function for now  |||
+                    <li><a href="#">Help</a></li>                              |||                                         |||
+                </ul>
+            </nav> -->
+            
+            <div class="header-right">
+    <div class="cart-icon" onclick="showCheckout()" style="cursor: pointer;">
+        🛒 <span class="cart-count">0</span>
+    </div>
+
+    <div class="settings-icon" onclick="openSettings()" style="cursor: pointer; font-size: 22px; color: #555;">
+        ⚙️
+    </div>
+
+    <button id="signInBtn" class="sign-in-btn" onclick="openAuth()">Sign In</button>
+
+   <div id="profileBtn" class="profile-dropdown" style="display: none;">
+    <div class="user-avatar" id="avatarCircle" onclick="toggleProfileMenu()" style="cursor: pointer;">
+        <span id="userInitial">👤</span>
+    </div>
+    
+    <div id="profileMenu" class="dropdown-content">
+        <div class="user-info-header">
+            <p id="userNameDisplay" style="font-weight: 700; color: #333;">Jeevan</p>
+        </div>
+        <hr style="border: 0; border-top: 1px solid #eee;">
+        <a href="#" onclick="showMyOrders()">📦 My Orders</a>
+        <a href="#" onclick="logout()">🚪 Log Out</a>
+    </div>
+</div>
+    </header>
+
+    <section class="hero">
+    <video autoplay loop muted playsinline class="hero-video">
+        <source src="foodflow_hero_video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+        <h1>Delicious food, <span>delivered</span> to your door</h1>
+        <p>Order from thousands of restaurants and get your favorite meals delivered fresh and fast.</p>
+        <div class="hero-search">
+            <input type="text" placeholder="Search for restaurants or dishes...">
+            <button>Find Food</button>
+        </div>
+    </div>
+</section>
+
+    <section class="categories container">
+        <h2>What are you craving?</h2>
+        <div class="category-grid">
+            <div class="category-card" onclick="filterByCategory('Pizza')">
+                <div class="category-icon">🍕</div>
+                <div class="category-name">Pizza</div>
+            </div>
+            <div class="category-card" onclick="filterByCategory('Burger')">
+                <div class="category-icon">🍔</div>
+                <div class="category-name">Burgers</div>
+            </div>
+            <div class="category-card" onclick="filterByCategory('suchi')">
+                <div class="category-icon">🍣</div>
+                <div class="category-name">Sushi</div>
+            </div>
+            <div class="category-card" onclick="filterByCategory('dosa')">
+                <div class="category-icon">Dosa</div>
+                <div class="category-name">Indian</div>
+            </div>
+            <div class="category-card" onclick="filterByCategory('All')">
+                <div class="category-icon">All</div>
+                <div class="category-name">View All</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="restaurants container">
+        <div class="section-header">
+            <h2>Popular near you</h2>
+            <a href="#" class="view-all">View all →</a>
+        </div>
+        
+        <div class="restaurant-grid" id="menuGrid">
+            <p style="grid-column: 1 / -1; text-align: center; color: #888; padding: 50px;">📡 Fetching dynamic menu from your backend server...</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-col-main">
+                <div class="footer-logo">
+                    <div class="logo-icon">F</div>
+                    FoodFlow
+                </div>
+                <p class="footer-motto">Delivering happiness one meal at a time. Fresh food from the best local restaurants.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li>About Us</li>
+                    <li>Careers</li>
+                    <li>Blog</li>
+                    <li>Press</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li>Help Center</li>
+                    <li>Contact Us</li>
+                    <li>Safety</li>
+                    <li>FAQs</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Partners</h4>
+                <ul>
+                    <li>Restaurants</li>
+                    <li>Drivers</li>
+                    <li>Affiliate</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li>Terms of Service</li>
+                    <li>Privacy Policy</li>
+                    <li>Cookie Policy</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 FoodFlow. All rights reserved. BTech Project by Konch.
+        </div>
+    </footer>
+
+
+    <script src="app.js"></script>
+
+
+<div id="checkoutModal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
+    <div style="background:white; padding:30px; border-radius:15px; width:400px; box-shadow:0 10px 30px rgba(0,0,0,0.3); animation: slideIn 0.3s ease;">
+        <h2 style="color:#e75a24; margin-bottom:15px; border-bottom:2px solid #fef3e9; padding-bottom:10px;">Order Summary</h2>
+        
+        <div id="billItems" style="margin-bottom:20px; max-height:200px; overflow-y:auto;"></div>
+
+        <div id="billTotals" style="background:#fdfbfa; padding:15px; border-radius:10px; line-height:1.8; font-size:14px;"></div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button onclick="closeModal()" style="flex: 1; padding: 12px; background: #eee; border: none; border-radius: 8px; cursor: pointer;">
+                Back
+            </button>
+            <button onclick="confirmOrder()" style="flex: 2; padding: 12px; background: #e75a24; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
+                Place Order
+            </button>
+        </div>
+    </div>
+</div>
+  
+<div id="ordersModal" style="display:none; position:fixed; z-index:2000; inset:0; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
+    <div style="background:white; padding:30px; border-radius:15px; width:450px; max-height:80vh; display:flex; flex-direction:column; box-shadow:0 10px 30px rgba(0,0,0,0.3);">
+        <h2 style="color:#e75a24; margin-bottom:15px; border-bottom:2px solid #fef3e9; padding-bottom:10px;">Your Order History</h2>
+        
+        <div id="orderHistoryList" style="overflow-y:auto; flex:1; margin-bottom:20px;">
+            <p style="text-align:center; color:#888;">Fetching your orders...</p>
+        </div>
+
+        <button onclick="document.getElementById('ordersModal').style.display='none'" style="padding:12px; background:#e75a24; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">
+            Close History
+        </button>
+    </div>
+</div>
+
+<style>
+    @keyframes slideIn {
+        from { transform: translateY(-20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+</style>
+<div id="authModal" style="display:none; position:fixed; z-index:2000; inset:0; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
+    <div style="background:white; padding:40px; border-radius:20px; width:380px; text-align:center; box-shadow:0 15px 50px rgba(0,0,0,0.3); animation: slideIn 0.3s ease;">
+        <h2 id="authTitle" style="color:#e75a24; margin-bottom:10px;">Welcome Back</h2>
+        <p id="authDesc" style="color:#666; font-size:14px; margin-bottom:25px;">Login to track your FoodFlow orders</p>
+        
+        <input type="text" id="userName" placeholder="Full Name" style="display:none; width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px; outline:none;">
+        
+        <input type="email" id="userEmail" placeholder="Email Address" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px; outline:none;">
+        <input type="password" id="userPass" placeholder="Password" style="width:100%; padding:12px; margin-bottom:20px; border:1px solid #ddd; border-radius:8px; outline:none;">
+        
+        <button id="authSubmitBtn" onclick="handleAuth()" style="width:100%; padding:14px; background:#e75a24; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer; font-size:16px;">
+            Sign In
+        </button>
+
+        <p style="text-align:right; margin-top:10px;">
+            <span onclick="openForgotModal()" style="color:#e75a24; cursor:pointer; font-size:13px; font-weight:600;">Forgot Password?</span>
+        </p>
+        
+        <p style="margin-top:20px; font-size:13px; color:#888;">
+            <span id="toggleMsg">Don't have an account?</span> 
+            <span id="toggleLink" onclick="toggleAuthMode()" style="color:#e75a24; cursor:pointer; font-weight:600;">Sign Up</span>
+        </p>
+        <button onclick="closeAuth()" style="margin-top:15px; background:none; border:none; color:#aaa; cursor:pointer; font-size:12px;">Maybe Later</button>
+    </div>
+</div>
+
+<div id="cartToast" class="cart-toast">
+    <span class="toast-icon">✅</span>
+    <span id="toastMessage">Item added to cart!</span>
+</div>
+
+<style>
+.cart-toast {
+    position: fixed;
+    bottom: -100px; /* Hidden by default below the screen */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: bottom 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    z-index: 9999;
+}
+
+/* The 'show' class slides it up */
+.cart-toast.show {
+    bottom: 30px; 
+}
+
+.toast-icon {
+    background: #60B246; /* Swiggy Green */
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+}
+</style>
+
+<div id="forgotModal" style="display:none; position:fixed; z-index:4000; inset:0; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
+    <div style="background:white; padding:40px; border-radius:20px; width:380px; text-align:center;">
+        <h2 style="color:#e75a24; margin-bottom:15px;">Reset Password</h2>
+        
+        <div id="otpRequestStep">
+            <input type="email" id="resetEmail" placeholder="Enter your registered email" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px; outline:none;">
+            <button onclick="requestOTP()" style="width:100%; padding:12px; background:#60B246; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Send OTP</button>
+        </div>
+
+        <div id="otpVerifyStep" style="display:none; margin-top:15px;">
+            <input type="text" id="resetOtp" placeholder="Enter 4-digit OTP" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px; outline:none; letter-spacing: 5px; text-align:center; font-size:18px;">
+            <input type="password" id="newPassword" placeholder="Enter New Password" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px; outline:none;">
+            <button onclick="resetPassword()" style="width:100%; padding:12px; background:#e75a24; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Update Password</button>
+        </div>
+
+        <button onclick="document.getElementById('forgotModal').style.display='none'" style="margin-top:20px; background:none; border:none; color:#888; cursor:pointer;">Cancel</button>
+    </div>
+</div>
+
+
+<div id="emptyCartModal" style="display:none; position:fixed; z-index:3000; inset:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center;">
+    <div style="background:#f4f5f7; padding:50px 40px; border-radius:20px; width:350px; text-align:center; box-shadow:0 15px 40px rgba(0,0,0,0.2); animation: slideIn 0.3s ease; position:relative;">
+        
+        <button onclick="closeEmptyCart()" style="position:absolute; top:15px; right:20px; background:none; border:none; font-size:24px; color:#999; cursor:pointer;">&times;</button>
+        
+        <div style="margin-bottom: 25px;">
+            <svg width="130" height="110" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M35 45 L45 20 L75 20 L85 45" stroke="#666" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M20 45 L100 45 L90 95 C89 98 86 100 83 100 L37 100 C34 100 31 98 30 95 Z" fill="#FFC107"/>
+                <path d="M15 40 L105 40 L105 48 L15 48 Z" fill="#F4C2C2" rx="3"/>
+                <line x1="40" y1="55" x2="45" y2="85" stroke="#FFD54F" stroke-width="3" stroke-linecap="round"/>
+                <line x1="60" y1="55" x2="60" y2="85" stroke="#FFD54F" stroke-width="3" stroke-linecap="round"/>
+                <line x1="80" y1="55" x2="75" y2="85" stroke="#FFD54F" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="30" cy="20" r="3" stroke="#888" stroke-width="1" fill="none"/>
+                <path d="M20 60 L24 60 M22 58 L22 62" stroke="#888" stroke-width="1"/>
+                <path d="M96 36 L100 36 M98 34 L98 38" stroke="#888" stroke-width="1"/>
+            </svg>
+        </div>
+        
+        <h2 style="color:#222; margin-bottom:25px; font-weight: 500; font-size: 24px; font-family: 'Segoe UI', sans-serif;">Your Cart Is Empty</h2>
+        
+        <button onclick="closeEmptyCartAndBrowse()" style="background:#FFB800; color:white; border:none; padding:12px 30px; border-radius:25px; font-weight:600; font-size:16px; cursor:pointer; box-shadow: 0 4px 10px rgba(255, 184, 0, 0.3); transition: transform 0.2s;">
+            Order Now
+        </button>
+    </div>
+</div>
+
+<div id="settingsModal" style="display:none; position:fixed; z-index:5000; inset:0; background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
+    <div style="background:var(--card-bg, white); color:var(--text-color, #333); padding:30px; border-radius:15px; width:380px; box-shadow:0 10px 30px rgba(0,0,0,0.3); position:relative;">
+        
+        <button onclick="closeSettings()" style="position:absolute; top:15px; right:20px; background:none; border:none; font-size:24px; color:#999; cursor:pointer;">&times;</button>
+        <h2 style="color:#e75a24; margin-bottom:20px; border-bottom:1px solid #ddd; padding-bottom:10px;">Settings</h2>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <span style="font-weight:600;">🌙 Dark Mode</span>
+            <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()" style="width:20px; height:20px; cursor:pointer;">
+        </div>
+
+        <div style="margin-bottom:20px; border-top:1px solid #ddd; padding-top:15px;">
+            <span style="font-weight:600; display:block; margin-bottom:8px;">Change Name</span>
+            <input type="text" id="settingNewName" placeholder="Enter new name" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:6px; outline:none;">
+            <button onclick="updateName()" style="width:100%; padding:10px; background:#60B246; color:white; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">Save Name</button>
+        </div>
+
+        <div style="border-top:1px solid #ddd; padding-top:15px;">
+            <span style="font-weight:600; display:block; margin-bottom:8px;">Change Password</span>
+            <input type="password" id="settingOldPass" placeholder="Current Password" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:6px; outline:none;">
+            <input type="password" id="settingNewPass" placeholder="New Password" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:6px; outline:none;">
+            <button onclick="updatePassword()" style="width:100%; padding:10px; background:#e75a24; color:white; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">Update Password</button>
+        </div>
+    </div>
+</div>
+
+
+<div id="locationModal" style="display:none; position:fixed; z-index:6000; inset:0; background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
+    <div style="background:white; padding:30px; border-radius:15px; width:350px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.3);">
+        <h2 style="color:#e75a24; margin-bottom:20px;">Delivery Location</h2>
+        
+        <button onclick="getLocationGPS()" style="width:100%; padding:12px; background:#60B246; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer; margin-bottom:15px; display:flex; justify-content:center; align-items:center; gap:8px;">
+            <span>📍</span> Use Current Location
+        </button>
+        
+        <div style="color:#888; margin-bottom:15px; font-size:14px;">— OR —</div>
+        
+        <div style="position:relative; width:100%; margin-bottom:10px;">
+            <input type="text" id="manualAddress" oninput="fetchAddressSuggestions()" placeholder="Enter full address manually..." autocomplete="off" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; outline:none; box-sizing:border-box;">
+            
+            <div id="addressSuggestions" style="display:none; position:absolute; top:100%; left:0; width:100%; background:white; border:1px solid #ddd; border-top:none; border-radius:0 0 8px 8px; z-index:10; max-height:160px; overflow-y:auto; box-shadow:0 6px 10px rgba(0,0,0,0.1); text-align:left;">
+            </div>
+        </div>
+        <button onclick="setManualAddress()" style="width:100%; padding:12px; background:#e75a24; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">
+            Search & Save Address
+        </button>
+
+        <button onclick="document.getElementById('locationModal').style.display='none'" style="margin-top:15px; background:none; border:none; color:#888; cursor:pointer;">Cancel</button>
+    </div>
+</div>
+
+<div id="outOfRangeModal" style="display:none; position:fixed; z-index:7000; inset:0; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
+    <div style="background:white; padding:30px; border-radius:15px; width:380px; text-align:center; border-top: 5px solid #e75a24;">
+        <h2 style="color:#222; margin-bottom:15px;">Out of Delivery Range 🛵</h2>
+        <p style="color:#555; margin-bottom:20px; line-height:1.5;">
+            Sorry, we can't deliver food to your address. You are <b id="userDistanceDisplay" style="color:#e75a24;"></b> km away. Our maximum delivery radius is 10 km.
+        </p>
+        
+        <div style="display:flex; gap:10px;">
+            <button onclick="document.getElementById('outOfRangeModal').style.display='none'" style="flex:1; padding:12px; background:#eee; border:none; border-radius:8px; cursor:pointer; font-weight:bold; color:#555;">
+                OK
+            </button>
+            <button onclick="document.getElementById('outOfRangeModal').style.display='none'; openLocationModal();" style="flex:2; padding:12px; background:#e75a24; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">
+                Change Delivery Address
+            </button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
