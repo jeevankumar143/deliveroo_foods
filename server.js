@@ -6,6 +6,8 @@ const nodemailer = require('nodemailer');
 const app = express();
 app.use(cors());
 app.use(express.json());
+const path = require('path');
+app.use(express.static(__dirname));
 
 // ==========================================
 // EMAIL SETUP
@@ -21,7 +23,7 @@ const transporter = nodemailer.createTransport({
 // ==========================================
 // DATABASE SETUP
 // ==========================================
-const mongoURI = "mongodb+srv://konchadajeevan3_db_user:6x7n4TgymstqGkqn@foodweb.qsiiaal.mongodb.net/?appName=foodweb"; 
+const mongoURI = "process.env.MONGO_URI"; 
 
 mongoose.connect(mongoURI)
     .then(() => console.log("✅ Swiggy Database Connected!"))
@@ -323,6 +325,12 @@ app.put('/api/user/password', async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: "Database error" });
     }
+});
+// ==========================================
+// SERVE FRONTEND (This fixes "Cannot GET /")
+// ==========================================
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // ==========================================
