@@ -329,7 +329,7 @@ app.put('/api/user/password', async (req, res) => {
 // ==========================================
 // SERVE FRONTEND (This fixes "Cannot GET /")
 // ==========================================
-app.get('*', (req, res) => {
+app.get((req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
