@@ -1,5 +1,5 @@
         // Use the same API URL configuration from your previous simple task app
-        const API_BASE_URL = 'http://localhost:3000';
+        const API_BASE_URL = 'https://deliveroo-foods.onrender.com';
 
         // Use the simplified Unicode characters for rating stars
         const starUnicode = '&#11088;'; // Simplified ⭐ character
